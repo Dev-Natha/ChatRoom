@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Home Page {% endblock %}
+{% block content %}
+<h1>Hello World</h1>
+<form action="" method="GET">
+    <input type="text" placeholder="Search Here" name="q">
+</form>
+<div class="grid">
+    <div>
+        <p>Search For Topics</p>
+        <a href="{% url 'home' %}">All</a>
+        <hr>
+        {% for topic in topics %}
+        <div><a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a></div>
+        <hr>
+        {% endfor %}
+    </div>
+    <div>
+        <a href="{% url 'create' %}">Create Room</a>
+        <p>{{room_count}} rooms available</p>
+        {% for room in rooms %}
+        <hr>
+        {% if request.user == room.host %}
+        <a href="{% url 'edit' room.id %}">Edit</a>
+        <a href="{% url 'delete' room.id %}">Delete</a>
+        {% endif %}
+        <p> created by <a href="{% url 'view-profile' room.host.id %}"><img src="{{room.host.upload.url}}" alt="">{{room.host.username}}</a> {{room.created|timesince}} ago</p>
+        <p><span>{{room.id}}  -- </span><a href="{% url 'room' room.id %}">{{room.name}}</a></p>
+        {% endfor %}
+    </div>
+    <div>
+        <h2>Recent Activities</h2>
+        <hr>
+        <div>
+            {% for message in room_messages %}
+                <p><a href="{% url 'view-profile' message.owner.id %}">{{message.owner}}</a> {{message.created|timesince}} ago</p>
+                <p>replied to <a href="{% url 'room' message.room.id %}">"{{message.room}}"</a></p>
+                <p>{{message.body}}</p>
+                {% if request.user == message.owner %}
+                <a href="{% url 'delete-message' message.id %}">Delete</a>
+                {% endif %}
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

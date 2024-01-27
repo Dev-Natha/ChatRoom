@@ -1,0 +1,6 @@
+distlib==0.3.8
+filelock==3.13.1
+mysql-connector-python==8.2.0
+platformdirs==4.1.0
+protobuf==4.21.12
+virtualenv==20.25.0

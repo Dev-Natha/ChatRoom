@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+    <h1>Profile Page</h1>
+    <hr>
+    <p>This is {{profile.username}}'s profile</p>
+    <p>Email: {{profile.email}}</p>
+    <p>Bio: {{profile.bio}}</p>
+    <img src="{{profile.upload.url}}" alt="">
+    {% if request.user == profile %}
+    <a href="{% url 'profile' profile.id %}">Edit profile</a>
+    {% endif %}
+{% endblock %}

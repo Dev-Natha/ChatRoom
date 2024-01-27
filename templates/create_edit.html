@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Create/Edit {% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <div>
+        <div>Topic Name:</div>
+        <input type="text" name="topic" list="topic-list" required value="{{user_topic}}">
+        <datalist id="topic-list">
+            {% for topic in topics %}
+            <option value="{{topic.name}}">{{topic.name}}</option>
+            {% endfor %}
+        </datalist>
+    </div>
+    <div>
+        <div>Room Name:</div>
+        {{form.name}}
+    </div>
+    <div>
+        <div>Room Description:</div>
+        {{form.description}}
+    </div>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
